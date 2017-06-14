@@ -1,53 +1,59 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
+ * @Author: Iñaki Rodriguez <nineunderground>
+ * @Date:   10-Jun-2017
+ * @Email:  nineunderground@gmail.com
+ * @Project: Ice Climber
+ * @Filename: index.ios.js
+ * @Last modified by:   nineunderground
+ * @Last modified time: 14-Jun-2017
  */
-
 import React, { Component } from 'react';
-import {
+import { View,
   AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+  StatusBar } from 'react-native';
+import InitialView from './src/components/ui/views/InitialView';
+import SetupView from './src/components/ui/views/SetupView';
+import GameBoard from './src/components/ui/views/GameBoardView';
+
+// Disable warning
+console.ignoredYellowBox = ['Remote debugger'];
 
 export default class iceClimber extends Component {
+
+  state = {
+    currentView: 1,
+    totalPlayers: 3,
+  }
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
+    if (this.state.currentView === 1) {
+      return (
+        <View style={{ flex: 1 }}>
+          <StatusBar hidden />
+          <InitialView root={this} />
+        </View>
+      );
+    } else if (this.state.currentView === 2) {
+      return (
+        <View style={{ flex: 1 }}>
+          <StatusBar hidden />
+          <SetupView root={this} />
+        </View>
+      );
+    } else if (this.state.currentView === 3) {
+      return (
+        <View style={{ flex: 1 }}>
+          <StatusBar hidden />
+          <GameBoard root={this} />
+        </View>
+      );
+    }
+      return (
+        <View style={{ flex: 1 }}>
+          <StatusBar hidden />
+          <InitialView root={this} />
+        </View>
+      );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-
 AppRegistry.registerComponent('iceClimber', () => iceClimber);

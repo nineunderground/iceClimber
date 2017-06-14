@@ -1,0 +1,21 @@
+@Author: Iñaki Rodriguez <nineunderground>
+@Date:   14-Jun-2017
+@Email:  nineunderground@gmail.com
+@Project: Ice Climber
+@Filename: info.txt
+@Last modified by:   nineunderground
+@Last modified time: 14-Jun-2017
+// Character names
+Aligero
+Beatrice
+Clemente
+Dario
+Ernesto
+Fiorello
+Gavino
+Irma
+Leonardo
+Natale
+Merlino
+Odessa
+Piero

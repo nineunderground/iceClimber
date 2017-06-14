@@ -7,8 +7,13 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"es6-promise": "^4.1.0",
+		"isomorphic-fetch": "^2.2.1",
 		"react": "16.0.0-alpha.12",
-		"react-native": "0.45.1"
+		"react-native": "0.45.1",
+		"react-native-button": "^2.0.0",
+		"react-navigation": "^1.0.0-beta.11",
+		"read-blob": "^1.1.0"
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",
