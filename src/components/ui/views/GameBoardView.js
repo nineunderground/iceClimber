@@ -4,56 +4,52 @@
  * @Email:  nineunderground@gmail.com
  * @Project: Ice Climber
  * @Filename: GameBoard.js
- * @Last modified by:   nineunderground
- * @Last modified time: 15-Jun-2017
+ * @Last modified by:   inaki
+ * @Last modified time: 16-Jun-2017
  */
 import React, { Component } from 'react';
-import { View,
-  Alert,
-  AlertIOS } from 'react-native';
+import { View, AlertIOS } from 'react-native';
 import Button from 'react-native-button';
-import { GEInitGame } from './../../core/GameEngine';
-import { Floor } from './../ViewHelper/Floor';
+import { Floor } from './../ViewHelper/Components';
+import ScoresPopUp from './ScoresPopUp';
 
-class GameBoard extends Component {
-  // TODO Create game engine with all mechanics
-  // First it shows a button that popup all pending
-  // characters in different rows + bottom row for
-  // selecting the destination floor.
-  //
-  // When all characters are deployed on the board,
-  // then game starts.
-  //
-  // Moving until characters if possible until there
-  // is voting.
-  //
-  // If voting is sucess then scoring and goes to
-  // next round (Max 3 rounds)
-  //
-  // If voting do not sucess, then remove the NO
-  // card and go on.
+// Private fields
+const TOTAL_CHARACTER_TILES = 13;
+const TOTAL_ROUNDS = 3;
+
+export default class GameBoardView extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      main: props,
-      totalPlayers: props.root.state.totalPlayers,
-      playerColor: props.root.state.playerColor,
-      isFirstPlayer: props.root.state.isFirstPlayer,
+      root_view: props.root,
+      ge_totalPlayers: props.root.state.totalPlayers,
+      ge_playerColor: props.root.state.playerColor,
+      ge_isFirstPlayer: props.root.state.isFirstPlayer,
+      ge_totalTilesSet: 0,
+      ge_currentRound: 1,
+      ge_isRoundFinish: false,
+      show_scores: false,
+      show_pick_character: false,
+      show_move_character: false,
     };
-    // call GameEngine...
   }
+
   onExitGame() {
-    const rootClass = this.state.main.root;
+    const rootClass = this.state.root_view;
     rootClass.setState({ currentView: 1 });
   }
-  onStart() {
-    // const args = {
-    //   totalPlayers: this.state.totalPlayers,
-    //   playerColor: this.state.playerColor,
-    //   isFirstPlayer: this.state.isFirstPlayer,
-    // };
-    GEInitGame();
+
+  onInitGame() {
+    this.onPickCharacter();
   }
+
+  onPickCharacter() {
+    const currentStatus = this.state;
+    currentStatus.show_pick_character = true;
+    this.setState(currentStatus);
+  }
+
   onQuit() {
     AlertIOS.alert(
       'Game End',
@@ -64,23 +60,50 @@ class GameBoard extends Component {
       ]
     );
   }
+
   onScores() {
-    Alert.alert('on Scores');
+    const currentState = this.state;
+    currentState.show_scores = true;
+    this.setState(currentState);
   }
+
   render() {
+    if (this.state.show_move_character) {
+      // show_move_character
+      return (
+        <View style={globalStyle.mainStyle}>
+          <Floor floorStyle={globalStyle.throneStyle} imageStyle={globalStyle.shieldImg} totalPos='1' />
+        </View>
+      );
+    }
+    if (this.state.show_pick_character) {
+      // show_pick_character
+      return (
+        <View style={globalStyle.mainStyle}>
+          <Floor floorStyle={globalStyle.throneStyle} imageStyle={globalStyle.shieldImg} totalPos='1' />
+        </View>
+      );
+    }
+    if (this.state.show_scores) {
+      // show_scores
+      return (
+        <ScoresPopUp gameView={this} />
+      );
+    }
+    // Board ready to start
     return (
       <View style={globalStyle.mainStyle}>
-        <Floor floorStyle={globalStyle.throneStyle} totalPos='1' />
-        <Floor floorStyle={globalStyle.floorFiveStyle} totalPos='4' />
-        <Floor floorStyle={globalStyle.floorFourStyle} totalPos='4' />
-        <Floor floorStyle={globalStyle.floorThreeStyle} totalPos='4' />
-        <Floor floorStyle={globalStyle.floorTwoStyle} totalPos='4' />
-        <Floor floorStyle={globalStyle.floorOneStyle} totalPos='4' />
-        <Floor floorStyle={globalStyle.basementStyle} totalPos='4' />
+        <Floor floorStyle={globalStyle.throneStyle} imageStyle={globalStyle.shieldImg} totalPos='1' />
+        <Floor floorStyle={globalStyle.floorFiveStyle} imageStyle={globalStyle.shieldImg} totalPos='4' />
+        <Floor floorStyle={globalStyle.floorFourStyle} imageStyle={globalStyle.shieldImg} totalPos='4' />
+        <Floor floorStyle={globalStyle.floorThreeStyle} imageStyle={globalStyle.shieldImg} totalPos='4' />
+        <Floor floorStyle={globalStyle.floorTwoStyle} imageStyle={globalStyle.shieldImg} totalPos='4' />
+        <Floor floorStyle={globalStyle.floorOneStyle} imageStyle={globalStyle.shieldImg} totalPos='4' />
+        <Floor floorStyle={globalStyle.basementStyle} imageStyle={globalStyle.shieldImg} totalPos='4' />
         <View style={globalStyle.menuStyle}>
           <Button
             style={{ color: 'blue', backgroundColor: 'white', borderWidth: 1, borderColor: 'black' }}
-            onPress={() => this.onStart()}
+            onPress={() => this.onInitGame()}
           >SELECT</Button>
           <Button
             style={{ color: 'grey', backgroundColor: 'white', borderWidth: 1, borderColor: 'black' }}
@@ -175,4 +198,4 @@ const globalStyle = {
 };
 
 // Make Component available to other parts of the app
-export default GameBoard;
+//export default GameBoardView;

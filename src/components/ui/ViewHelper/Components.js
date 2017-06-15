@@ -3,23 +3,23 @@
  * @Date:   15-Jun-2017
  * @Email:  nineunderground@gmail.com
  * @Project: Ice Climber
- * @Filename: Floor.js
- * @Last modified by:   nineunderground
+ * @Filename: Components.js
+ * @Last modified by:   inaki
  * @Last modified time: 15-Jun-2017
  */
- import React, { Component } from 'react';
- import { View,
-   Image } from 'react-native';
+import React, { Component } from 'react';
+import { View, Image } from 'react-native';
 
 const tileSiluetteImg = require('../../../res/crown.png');
 
- export default class Floor extends Component {
 
+export class Floor extends Component {
    constructor(props) {
      super(props);
      this.state = {
        styleToSet: props.floorStyle,
        totalIcons: props.totalPos,
+       styleToImg: props.imageStyle,
      };
    }
 
@@ -30,7 +30,7 @@ const tileSiluetteImg = require('../../../res/crown.png');
              <Image
                source={tileSiluetteImg}
                resizeMode={'contain'}
-               style={globalStyle.shieldImg}
+               style={this.state.styleToImg}
              / >
            </View>
        );
@@ -40,22 +40,22 @@ const tileSiluetteImg = require('../../../res/crown.png');
            <Image
              source={tileSiluetteImg}
              resizeMode={'contain'}
-             style={globalStyle.shieldImg}
+             style={this.state.styleToImg}
            / >
            <Image
              source={tileSiluetteImg}
              resizeMode={'contain'}
-             style={globalStyle.shieldImg}
+             style={this.state.styleToImg}
            / >
            <Image
              source={tileSiluetteImg}
              resizeMode={'contain'}
-             style={globalStyle.shieldImg}
+             style={this.state.styleToImg}
            / >
            <Image
              source={tileSiluetteImg}
              resizeMode={'contain'}
-             style={globalStyle.shieldImg}
+             style={this.state.styleToImg}
            / >
        </View>
        );
@@ -64,4 +64,4 @@ const tileSiluetteImg = require('../../../res/crown.png');
          <View />
        );
    }
- }
+}

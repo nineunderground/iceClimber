@@ -4,8 +4,8 @@
  * @Email:  nineunderground@gmail.com
  * @Project: Ice Climber
  * @Filename: index.ios.js
- * @Last modified by:   nineunderground
- * @Last modified time: 14-Jun-2017
+ * @Last modified by:   inaki
+ * @Last modified time: 15-Jun-2017
  */
 import React, { Component } from 'react';
 import { View,
@@ -13,7 +13,7 @@ import { View,
   StatusBar } from 'react-native';
 import InitialView from './src/components/ui/views/InitialView';
 import SetupView from './src/components/ui/views/SetupView';
-import GameBoard from './src/components/ui/views/GameBoardView';
+import GameBoardView from './src/components/ui/views/GameBoardView';
 
 // Disable warning
 console.ignoredYellowBox = ['Remote debugger'];
@@ -44,7 +44,7 @@ export default class iceClimber extends Component {
       return (
         <View style={{ flex: 1 }}>
           <StatusBar hidden />
-          <GameBoard root={this} />
+          <GameBoardView root={this} />
         </View>
       );
     }
