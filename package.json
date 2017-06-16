@@ -13,6 +13,7 @@
 		"react-native": "0.45.1",
 		"react-native-button": "^2.0.0",
 		"react-native-popup-dialog": "^0.7.29",
+		"react-native-tableview-simple": "^0.16.6",
 		"react-navigation": "^1.0.0-beta.11",
 		"read-blob": "^1.1.0"
 	},
