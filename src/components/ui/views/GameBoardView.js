@@ -275,27 +275,5 @@ const tileCharacterTenOneImg = require('./../../../res/characters/People_11.png'
 const tileCharacterTenTwoImg = require('./../../../res/characters/People_12.png');
 const tileCharacterTenThreeImg = require('./../../../res/characters/People_13.png');
 
-
-const characterImgNotSelectedStyle = {
-  width: 80,
-  height: 60,
-  borderTopLeftRadius: 5,
-  borderTopRightRadius: 5,
-  opacity: 0.4,
-  margin: 10,
-  shadowOpacity: 0.9
-};
-
-const characterImgSelectedStyle = {
-  width: 80,
-  height: 60,
-  borderTopLeftRadius: 5,
-  borderTopRightRadius: 5,
-  opacity: 1.0,
-  margin: 10,
-  shadowOpacity: 0.9,
-  shadowColor: 'blue',
-};
-
 // Make Component available to other parts of the app
 //export default GameBoardView;
