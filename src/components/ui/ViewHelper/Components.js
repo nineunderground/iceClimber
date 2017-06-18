@@ -87,16 +87,18 @@ export class DialogCharacterRow extends Component {
     };
   }
 
-  setImageSelected(playerSelected) {
+  setImageSelected(playerSelected, intialSel) {
     //debugger;
     const newState = this.state;
-    if (!playerSelected.isSelected) {
-      newState.imageLeftSelected = true;
-      playerSelected.isSelected = true;
-    } else {
-      newState.imageLeftSelected = false;
-      playerSelected.isSelected = false;
+    if (intialSel === 'L') {
+      newState.imageLeftSelected = !playerSelected.isSelected;
+    } else if (intialSel === 'C') {
+      newState.imageCenterSelected = !playerSelected.isSelected;
+    } else if (intialSel === 'R') {
+      newState.imageRightSelected = !playerSelected.isSelected;
     }
+    playerSelected.isSelected = !playerSelected.isSelected;
+    //ge_character_selected = playerSelected
     this.setState(newState);
   }
   characterLeft = null;
@@ -108,31 +110,29 @@ export class DialogCharacterRow extends Component {
   render() {
     return (
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: this.state.mainJustify, alignItems: 'center' }}>
-        <TouchableOpacity onPress={() => { this.setImageSelected(this.characterLeft); }}>
+        <TouchableOpacity onPress={() => { this.setImageSelected(this.characterLeft, 'L'); }}>
           <Image
             source={this.characterLeft.img}
             resizeMode={'contain'}
             style={this.state.imageLeftSelected ? characterImgSelectedStyle : characterImgNotSelectedStyle}
           / >
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { this.setImageSelected(this.characterCenter); }}>
+        <TouchableOpacity onPress={() => { this.setImageSelected(this.characterCenter, 'C'); }}>
         <Image
           source={this.characterCenter.img}
           resizeMode={'contain'}
           style={this.state.imageCenterSelected ? characterImgSelectedStyle : characterImgNotSelectedStyle}
         / >
         </TouchableOpacity>
-        {this.state.isThreeImages ? (
-          <TouchableOpacity onPress={() => { this.setImageSelected(this.characterRight); }}>
+        {this.state.isThreeImages &&
+          <TouchableOpacity onPress={() => { this.setImageSelected(this.characterRight, 'R'); }}>
           <Image
             source={this.characterRight.img}
             resizeMode={'contain'}
             style={this.state.imageRightSelected ? characterImgSelectedStyle : characterImgNotSelectedStyle}
           / >
           </TouchableOpacity>
-        ) : (
-          <Text />
-        )}
+        }
       </View>
     );
   }
