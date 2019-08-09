@@ -5,7 +5,7 @@
  * @Project: Ice Climber
  * @Filename: Components.js
  * @Last modified by:   inaki
- * @Last modified time: 18-Jun-2017
+ * @Last modified time: 21-Jun-2017
  */
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
@@ -73,10 +73,10 @@ export class Floor extends Component {
 export class DialogCharacterRow extends Component {
   constructor(props) {
    super(props);
-   //debugger;
    this.characterLeft = props.charLeft;
    this.characterCenter = props.charCenter;
    this.characterRight = props.charRight;
+   this.gameView = props.gameView;
     this.state = {
       isThreeImages: props.isThree,
       mainJustify: props.mainJustify,
@@ -88,7 +88,6 @@ export class DialogCharacterRow extends Component {
   }
 
   setImageSelected(playerSelected, intialSel) {
-    //debugger;
     const newState = this.state;
     if (intialSel === 'L') {
       newState.imageLeftSelected = !playerSelected.isSelected;
@@ -97,15 +96,27 @@ export class DialogCharacterRow extends Component {
     } else if (intialSel === 'R') {
       newState.imageRightSelected = !playerSelected.isSelected;
     }
-    playerSelected.isSelected = !playerSelected.isSelected;
-    //ge_character_selected = playerSelected
+    //playerSelected.isSelected = !playerSelected.isSelected;
+
+    // Game view state
+    const gameState = this.gameView.state;
+    if (playerSelected.isSelected) {
+      this.geCharacterSelected = playerSelected;
+      gameState.geCharacterSelected = playerSelected;
+    } else {
+      this.geCharacterSelected = null;
+      gameState.geCharacterSelected = null;
+    }
     this.setState(newState);
+    this.gameView.setState(gameState);
+    // All selectable needed? NO wait, YES move on
   }
+
   characterLeft = null;
   characterCenter = null;
   characterRight = null;
+  geCharacterSelected = null;
 
-// ge_character_selected
 // eslint-disable-line global-require
   render() {
     return (
@@ -116,6 +127,7 @@ export class DialogCharacterRow extends Component {
             resizeMode={'contain'}
             style={this.state.imageLeftSelected ? characterImgSelectedStyle : characterImgNotSelectedStyle}
           / >
+          <Text style={{ textAlign: 'center', justifyContent: 'center', alignItems: 'stretch' }}>{this.characterLeft.name}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => { this.setImageSelected(this.characterCenter, 'C'); }}>
         <Image
@@ -123,6 +135,7 @@ export class DialogCharacterRow extends Component {
           resizeMode={'contain'}
           style={this.state.imageCenterSelected ? characterImgSelectedStyle : characterImgNotSelectedStyle}
         / >
+        <Text style={{ textAlign: 'center', justifyContent: 'center' }}>{this.characterCenter.name}</Text>
         </TouchableOpacity>
         {this.state.isThreeImages &&
           <TouchableOpacity onPress={() => { this.setImageSelected(this.characterRight, 'R'); }}>
@@ -131,12 +144,36 @@ export class DialogCharacterRow extends Component {
             resizeMode={'contain'}
             style={this.state.imageRightSelected ? characterImgSelectedStyle : characterImgNotSelectedStyle}
           / >
+          <Text style={{ textAlign: 'center', justifyContent: 'center' }} >{this.characterRight.name}</Text>
           </TouchableOpacity>
         }
       </View>
     );
   }
 }
+
+const characterImgNotSelectedStyle = {
+  width: 70,
+  height: 45,
+  borderTopLeftRadius: 5,
+  borderTopRightRadius: 5,
+  opacity: 0.4,
+  shadowOpacity: 0.9,
+  justifyContent: 'center',
+  flex: 1,
+};
+
+const characterImgSelectedStyle = {
+  width: 70,
+  height: 45,
+  borderTopLeftRadius: 5,
+  borderTopRightRadius: 5,
+  opacity: 1.0,
+  shadowOpacity: 0.9,
+  shadowColor: 'blue',
+  justifyContent: 'center',
+  flex: 1,
+};
 
 // eslint-enable-line global-require
 //
@@ -183,23 +220,3 @@ export class PlayerCell extends Component {
 }
 
 // ********************************************************
-const characterImgNotSelectedStyle = {
-  width: 80,
-  height: 60,
-  borderTopLeftRadius: 5,
-  borderTopRightRadius: 5,
-  opacity: 0.4,
-  margin: 10,
-  shadowOpacity: 0.9
-};
-
-const characterImgSelectedStyle = {
-  width: 80,
-  height: 60,
-  borderTopLeftRadius: 5,
-  borderTopRightRadius: 5,
-  opacity: 1.0,
-  margin: 10,
-  shadowOpacity: 0.9,
-  shadowColor: 'blue',
-};

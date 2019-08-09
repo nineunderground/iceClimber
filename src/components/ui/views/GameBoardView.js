@@ -5,7 +5,7 @@
  * @Project: Ice Climber
  * @Filename: GameBoard.js
  * @Last modified by:   inaki
- * @Last modified time: 18-Jun-2017
+ * @Last modified time: 19-Jun-2017
  */
 import React, { Component } from 'react';
 import { View, AlertIOS, Text } from 'react-native';
@@ -35,7 +35,12 @@ export default class GameBoardView extends Component {
       show_scores: false,
       show_pick_character: false,
       show_move_character: false,
-      ge_character_selected: null,
+      geCharacterSelected: null,
+      isFirstFloorEnabled: true,
+      isSecondFloorEnabled: true,
+      isThirdFloorEnabled: true,
+      isFourthFloorEnabled: true,
+      isFifthFloorEnabled: true,
     };
   }
 
@@ -99,18 +104,17 @@ export default class GameBoardView extends Component {
       // TODO
   }
 
-  gameOptions = {}
-
-  enableButtons(isEnabled) {
-    //const currentState = this.state;
-    // currentState.isFirstFloorEnabled = isEnabled;
-    // currentState.isSecondFloorEnabled = isEnabled;
-    // currentState.isThirdFloorEnabled = isEnabled;
-    // currentState.isFourthFloorEnabled = isEnabled;
-    // currentState.isFifthFloorEnabled = isEnabled;
-    // currentState.isThroneFloorEnabled = isEnabled;
-    //this.setState(currentState);
+  setLevelSelected(floor) {
+    // If playerSelected is not null...
+    const player = this.state.geCharacterSelected;
+    if (player) {
+      console.log(`Player ${player.name} moved to floor ${floor}`);
+    } else {
+      console.log('Nothing selected');
+    }
   }
+
+  gameOptions = {}
 
   render() {
     return (
@@ -159,7 +163,7 @@ export default class GameBoardView extends Component {
         <PopupDialog
           show={this.state.show_pick_character}
           overlayOpacity='0.8'
-          height={400}
+          height={500}
           dialogTitle={<DialogTitle title="CHOOSE CHARACTER AND FLOOR" />}
           onDismissed={() => this.onPickCharacterEnd()}
         >
@@ -171,7 +175,7 @@ export default class GameBoardView extends Component {
             <DialogCharacterRow gameView={this} charLeft={characters.m} charCenter={characters.o} isThree charRight={characters.p} mainJustify='space-between' />
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
               {this.state.isFirstFloorEnabled ? (
-                <Button style={{ backgroundColor: 'black', color: 'white' }}>Lv 1</Button>
+                <Button onPress={() => { this.setLevelSelected('1'); }} style={{ backgroundColor: 'black', color: 'white' }}>Lv 1</Button>
               ) : (
                 <Text />
               )}
